@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "915300267574",
+    "project_id": "appsistemasinteligentes",
+    "storage_bucket": "appsistemasinteligentes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915300267574:android:cb74dc01c2f6159ce2ca97",
+        "android_client_info": {
+          "package_name": "com.example.flutter_sistemas_inteligentes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQGS-ORhBU5dZP-9_KcCsn7qXXKeXbGjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
