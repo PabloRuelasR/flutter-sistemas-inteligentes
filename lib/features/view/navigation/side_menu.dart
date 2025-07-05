@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sistemas_inteligentes/features/view/navigation/menu_header.dart';
+import 'package:flutter_sistemas_inteligentes/features/view/navigation/menu_list.dart';
 import 'package:flutter_sistemas_inteligentes/features/view/navigation/theme_switch.dart';
-import 'menu_header.dart';
-import 'menu_list.dart';
 
 class SideMenu extends StatelessWidget {
   final String selectedMenu;
-  final Function(String) onSelectMenu;
+  final Function(String) onMenuChanged;
 
   const SideMenu({
     super.key,
     required this.selectedMenu,
-    required this.onSelectMenu,
+    required this.onMenuChanged,
   });
 
   @override
@@ -28,7 +28,7 @@ class SideMenu extends StatelessWidget {
           Expanded(
             child: MenuList(
               selectedMenu: selectedMenu,
-              onSelectMenu: onSelectMenu,
+              onSelectMenu: onMenuChanged,
             ),
           ),
           const ThemeSwitchTile(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sistemas_inteligentes/features/view/navigation/menu_config.dart';
 
 class MenuList extends StatelessWidget {
   final String selectedMenu;
@@ -12,34 +13,20 @@ class MenuList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final menuItems = ["Inicio", "Buscar", "Historial", "Configuración"];
-
     return ListView(
       children: [
         for (var item in menuItems)
           ListTile(
-            leading: Icon(_getIcon(item)),
-            title: Text(item),
-            selected: selectedMenu == item,
+            leading: Icon(item.icon),
+            title: Text(item.title),
+            selected: selectedMenu == item.title,
             selectedTileColor: Colors.grey.shade300,
-            onTap: () => onSelectMenu(item),
+            onTap: () {
+              Navigator.pop(context);
+              onSelectMenu(item.title);
+            },
           ),
       ],
     );
-  }
-
-  IconData _getIcon(String item) {
-    switch (item) {
-      case "Inicio":
-        return Icons.home;
-      case "Buscar":
-        return Icons.search;
-      case "Historial":
-        return Icons.history;
-      case "Configuración":
-        return Icons.settings;
-      default:
-        return Icons.circle;
-    }
   }
 }

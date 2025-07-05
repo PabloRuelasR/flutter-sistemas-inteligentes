@@ -13,20 +13,13 @@ class CardTimbreDetalle extends StatefulWidget {
 
 class _CardTimbreDetalleState extends State<CardTimbreDetalle>
     with SingleTickerProviderStateMixin {
-  final DatabaseReference ref = FirebaseDatabase.instance.ref(
-    'eventosTimbre/C56umbwmLOvvc2ePXH99/timestamp',
-  );
+  final DatabaseReference ref = FirebaseDatabase.instance
+      .ref('eventosTimbre/C56umbwmLOvvc2ePXH99');
 
   String valueText = "Sin registro";
   String lastRawDate = "";
   double iconScale = 1.0;
   final player = AudioPlayer();
-
-  void _playSound() async {
-    await player.play(AssetSource('sounds/timbre.mp3'), volume: 2.0);
-    await Future.delayed(const Duration(milliseconds: 200));
-    //await player.play(AssetSource('sounds/timbre.mp3'), volume: 1.0);
-  }
 
   void _animateIcon() {
     setState(() {
@@ -40,7 +33,7 @@ class _CardTimbreDetalleState extends State<CardTimbreDetalle>
   }
 
   void _triggerEffects() {
-   // _playSound();
+    //_playSound();
     _animateIcon();
   }
 
@@ -50,20 +43,33 @@ class _CardTimbreDetalleState extends State<CardTimbreDetalle>
       stream: ref.onValue,
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
-          final String rawDate = snapshot.data!.snapshot.value.toString();
+          final rawData = snapshot.data!.snapshot.value;
 
-          if (rawDate != lastRawDate) {
-            lastRawDate = rawDate;
-            try {
-              final DateTime dateTime = DateTime.parse(rawDate).toLocal();
-              valueText = DateFormat('hh:mm a').format(dateTime);
-            } catch (e) {
-              valueText = "Formato inválido";
-            }
+          if (rawData is Map<dynamic, dynamic>) {
+            String latestTimestamp = "";
 
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              _triggerEffects();
+            rawData.forEach((key, value) {
+              if (value is Map && value['timestamp'] != null) {
+                final ts = value['timestamp'].toString();
+                if (ts.compareTo(latestTimestamp) > 0) {
+                  latestTimestamp = ts;
+                }
+              }
             });
+
+            if (latestTimestamp.isNotEmpty && latestTimestamp != lastRawDate) {
+              lastRawDate = latestTimestamp;
+              try {
+                final dateTime = DateTime.parse(latestTimestamp).toLocal();
+                valueText = DateFormat('hh:mm a').format(dateTime);
+              } catch (e) {
+                valueText = "Formato inválido";
+              }
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _triggerEffects();
+              });
+            }
           }
         }
 

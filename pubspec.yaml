@@ -38,6 +38,8 @@ dependencies:
   rive: ^0.13.3
   intl: ^0.18.1
   audioplayers: 6.5.0
+  pdf: ^3.10.4
+  printing: ^5.10.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -69,6 +71,7 @@ flutter:
   assets:
     - assets/splash_animation.json
     - assets/sounds/timbre.mp3
+    - assets/logo.png
   fonts:
     - family: Poppins
       fonts:
