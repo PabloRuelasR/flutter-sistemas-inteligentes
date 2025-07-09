@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
 
 class DashboardCard extends StatelessWidget {
-  final String title;
+  final String? title;
   final IconData? icon;
   final Widget? iconWidget;
-  final String value;
+  final String? value;
   final Color color;
+  final Widget? child;
 
   const DashboardCard({
     super.key,
-    required this.title,
+    this.title,
     this.icon,
     this.iconWidget,
-    required this.value,
+    this.value,
     required this.color,
+    this.child,
   });
 
   @override
   Widget build(BuildContext context) {
+    if (child != null) {
+      // ✅ Usar contenido personalizado
+      return Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        color: Theme.of(context).brightness == Brightness.dark
+            ? Colors.grey.shade900
+            : Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: child!,
+        ),
+      );
+    }
+
+    // ✅ Diseño clásico
     final Widget iconToShow = iconWidget ??
         Icon(
           icon,
@@ -39,12 +57,12 @@ class DashboardCard extends StatelessWidget {
             iconToShow,
             const SizedBox(height: 12),
             Text(
-              title,
+              title ?? "",
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Text(
-              value,
+              value ?? "",
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 16),
             ),
